@@ -24,7 +24,6 @@
             color: #fff;
         }
 
-        /* ── MARQUEE ── */
         .mq1 {
             background: lime;
             color: #000;
@@ -41,14 +40,11 @@
             padding: 5px 0;
         }
 
-        /* ── HEADER ── */
         header {
             text-align: center;
             padding: 18px 10px 14px;
             border-bottom: 6px double yellow;
-            background: repeating-linear-gradient(90deg,
-                    #000080 0px, #000080 10px,
-                    #00008a 10px, #00008a 20px);
+            background: repeating-linear-gradient(90deg, #000080 0px, #000080 10px, #00008a 10px, #00008a 20px);
         }
 
         .blink {
@@ -72,8 +68,6 @@
             font-size: clamp(28px, 9vw, 72px);
             line-height: 1.2;
             display: inline-block;
-            animation: shake 0.35s infinite alternate ease-in-out;
-            /* rainbow shift */
             background: linear-gradient(90deg, yellow, lime, cyan, #ff69b4, yellow);
             background-size: 300%;
             -webkit-background-clip: text;
@@ -112,7 +106,6 @@
             letter-spacing: 2px;
         }
 
-        /* ── SEARCH ── */
         .search-wrap {
             max-width: 480px;
             margin: 16px auto 4px;
@@ -150,7 +143,6 @@
             margin: 4px 0 20px;
         }
 
-        /* ── GRID ── */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -158,17 +150,14 @@
             padding: 10px 22px 60px;
             max-width: 1280px;
             margin: 0 auto;
-            /* leave room so rotated cards don't clip */
             overflow: visible;
         }
 
-        /* ── CARD ── */
         .card {
             background: #000;
             border: 5px solid;
             padding: 0 0 14px;
             position: relative;
-            /* each card gets a fixed tilt via inline style set in JS */
             transition: transform 0.15s;
         }
 
@@ -183,7 +172,6 @@
             object-fit: cover;
             border: 3px solid #333;
             margin-bottom: 10px;
-            image-rendering: auto;
         }
 
         .card a {
@@ -191,7 +179,6 @@
             text-decoration: none;
         }
 
-        /* border & name colors cycling */
         .card:nth-child(5n+1) {
             border-color: lime;
         }
@@ -301,29 +288,192 @@
             background: #ff9900;
         }
 
-        /* photo slot */
-        .photo-slot {
-            margin: 10px 0 4px;
-            border: 3px dashed #444;
-            height: 150px;
+        /* ── LIKES & COMMENTS ── */
+        .social-bar {
+            margin: 14px 12px 0;
+            border-top: 3px dashed #222;
+            padding-top: 10px;
+        }
+
+        .like-row {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            color: #444;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .like-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            background: #111;
+            border: 2px solid #444;
+            color: #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.12s;
+            user-select: none;
+        }
+
+        .like-btn:hover {
+            border-color: #ff69b4;
+            color: #ff69b4;
+        }
+
+        .like-btn.liked {
+            border-color: #ff69b4;
+            color: #ff69b4;
+            background: #1a0010;
+        }
+
+        .like-btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .like-count {
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            color: #ff69b4;
+        }
+
+        /* comments toggle */
+        .comments-toggle {
             font-family: 'Press Start 2P', monospace;
             font-size: 7px;
+            background: none;
+            border: 2px solid #333;
+            color: #666;
+            padding: 4px 8px;
+            cursor: pointer;
+            margin-left: auto;
+            transition: all 0.12s;
+        }
+
+        .comments-toggle:hover {
+            border-color: cyan;
+            color: cyan;
+        }
+
+        .comments-section {
+            margin-top: 8px;
+        }
+
+        .comment-list {
+            margin-bottom: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .comment-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .comment-list::-webkit-scrollbar-thumb {
+            background: #333;
+        }
+
+        .comment-item {
+            background: #0a0a0a;
+            border-left: 3px solid #333;
+            padding: 5px 8px;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        .comment-author {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 6px;
+            color: cyan;
+            margin-bottom: 3px;
+        }
+
+        .comment-time {
+            font-family: 'VT323', monospace;
+            font-size: 13px;
+            color: #444;
+            float: right;
+        }
+
+        .comment-text {
+            color: #ccc;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .comment-empty {
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            color: #444;
             text-align: center;
-            line-height: 2.2;
-            background: #050505;
+            padding: 8px 0;
         }
 
-        .photo-slot .cam {
-            font-size: 30px;
-            margin-bottom: 4px;
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
-        /* corner gif-like decorations */
+        .comment-form input,
+        .comment-form textarea {
+            background: #0a0a0a;
+            border: 2px solid #333;
+            color: #eee;
+            font-family: 'Comic Neue', cursive;
+            font-size: 12px;
+            padding: 5px 8px;
+            outline: none;
+            resize: none;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            border-color: lime;
+        }
+
+        .comment-form input::placeholder,
+        .comment-form textarea::placeholder {
+            color: #333;
+        }
+
+        .comment-submit {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            background: #000;
+            border: 2px solid lime;
+            color: lime;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.12s;
+            align-self: flex-end;
+        }
+
+        .comment-submit:hover {
+            background: lime;
+            color: #000;
+        }
+
+        .comment-submit:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .status-msg {
+            font-family: 'VT323', monospace;
+            font-size: 14px;
+            padding: 3px 0;
+            text-align: center;
+        }
+
+        .status-msg.ok {
+            color: lime;
+        }
+
+        .status-msg.err {
+            color: #f55;
+        }
+
+        /* corner decorations */
         .corner {
             position: fixed;
             font-size: 22px;
@@ -361,12 +511,10 @@
             }
         }
 
-        /* hidden */
         .card.hidden {
             display: none;
         }
 
-        /* ── FOOTER ── */
         footer {
             text-align: center;
             padding: 18px 12px 36px;
@@ -382,7 +530,6 @@
             color: lime;
         }
 
-        /* ── HORIZONTAL RULE 90s style ── */
         hr.retro {
             border: none;
             height: 6px;
@@ -438,139 +585,67 @@
     </footer>
 
     <script>
-        // ── данные ТОЧНО из CSV, без изменений ──
+
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIYOAUeJ2xh30AKKDr9YORcKiW5KOlW9uszZ7c2U0r7QmV2QzR-T8zgSYflJCjAJ6q/exec';
+
+        // ── DATA ──
         const people = [
-            {
-                name: "Ростислав Имаев",
-                looks: "Рост 184, длинные для парня волосы, ношу прямоугольные очки",
-                item: "Буду в бордовой рубашке, на которой следы от ног и с цепью на кармане джинсов (левом)",
-                emoji: "🕶️", photo: []
-            },
-            {
-                name: "Катя",
-                looks: "157см, проколы в ушных хрещах",
-                item: "Браслет на правой руке с созвездием",
-                emoji: "⭐", photo: []
-            },
-            {
-                name: "Саша Флэш 😎",
-                looks: "Заёбаная",
-                item: "Привяжу к себе шарик",
-                emoji: "🎈", photo: []
-            },
-            {
-                name: "София",
-                looks: "Рост ~160, татуха на левой руке (с моей стороны, для других правая), пирсинг губы, крашенные волосы, круглые очки, рядом всегда эмобойчик",
-                item: "Выделяющаяся одежда, не спутаешь",
-                emoji: "🖤", photo: []
-            },
-            {
-                name: "Антон Мишин",
-                looks: "шкаф, усы",
-                item: "усы……, розовая кепка",
-                emoji: "🐼", photo: ['photos/IMG_9695 - Anton Mišin.jpeg']
-            },
-            {
-                name: "Диана Патракова-Матулявичене)))))",
-                looks: "Полное телосложение, ношу очки, временно блондинка, татуировки на руках, ногах, шее и груди",
-                item: "Петух на правой руке😂",
-                emoji: "🐓", photo: ['photos/image - Diana Patrakova.jpg', 'photos/image - Diana Patrakova(1).jpg']
-            },
-            {
-                name: "Юра🫡",
-                looks: "Челка на глаз, как будто я эмо йоууу",
-                item: "Собачьи уши и браслет с брюльками на левой руке",
-                emoji: "🐾", photo: ['photos/image - Juri Zn.jpg', 'photos/IMG_9069 - Juri Zn.jpeg']
-            },
-            {
-                name: "Вика",
-                looks: "Рост 169, русые волосы, серо-зелёнве глаза. Есть тату на левой руке, стройная :3",
-                item: "Кольцо с котиком на правой руке, кольцо золотое с камушком на левой.",
-                emoji: "🐱", photo: []
-            },
-            {
-                name: "Илья",
-                looks: "Рост более 1.90, светлые волосы, светлые глаза",
-                item: "Зеленая панамка",
-                emoji: "🟢", photo: []
-            },
-            {
-                name: "Андрей",
-                looks: "Не полная метка Волан-де-мората на лбу, родимое пятно на половину левого бедра",
-                item: "Часы с оранжевым ремешком на левой руке",
-                emoji: "⚡", photo: ['photos/IMG_20260614_215751_407 - Andrei Suhodol.jpg']
-            },
-            {
-                name: "Наира",
-                looks: "Высокая, рыжая, наверное не буду носить очку в этот день, септум в носу и в ушах золотые сережки",
-                item: "рыжая бошка, могу надеть зеленую кепку там, заплести мои signature 2 косички на затылке, септум в носу и в ушах золотые сережки",
-                emoji: "🦊", photo: []
-            },
-            {
-                name: "Лада",
-                looks: "На носу осталась дырка после ветрянки\nТатуировка Нефертити на левой руке",
-                item: "Oura ring",
-                emoji: "💍", photo: []
-            },
-            {
-                name: "Артур",
-                looks: "Татуировка механических часов на правой руке, ношу очки",
-                item: "Наплечная сумка, чёрно-золотистого цвета часы",
-                emoji: "⌚", photo: []
-            },
-            {
-                name: "Артём Шамшурс",
-                looks: "«Субтильное» телосложение(небольшие руки и тд.), бэйби фэйс, шатен, ровная осанка, длинная шея. Часто ношу просторную одежду и рюкзак",
-                item: "Чётки на шее(или в руках). Ну и рюкзак часто ношу",
-                emoji: "📿", photo: []
-            },
-            {
-                name: "Йоланта",
-                looks: "Рост меньше 170см, карие глаза и длинные волосы",
-                item: "Ожерелье из ракушек",
-                emoji: "🐚", photo: []
-            },
-            {
-                name: "Ева",
-                looks: "Рост 157, тёмные кучерявые волосы, серые глаза, огромная бицуха (нет)",
-                item: "Прикольная панамка",
-                emoji: "👒", photo: []
-            },
-            {
-                name: "Максим Тюленев",
-                looks: "Рост ~178😞\nБрюнет?\nКороткая стрижка\nБорода\n72кг\nВсе ноги в ссадинах",
-                item: "Я буду в розовой одежде (шорты и футболка)",
-                emoji: "🌸", photo: []
-            },
-            {
-                name: "Arvidas",
-                looks: "Ношу очки, татуировка на правой кисти",
-                item: "Рубашка с коротким рукавом с динозаврами.",
-                emoji: "🦖", photo: []
-            },
-            {
-                name: "Диана (Гришкова)",
-                looks: "Светлые длинные волосы, голубые глаза, средний рост",
-                item: "Косички и блестящие камушки в волосах.",
-                emoji: "✨", photo: []
-            },
-            {
-                name: "Ilya",
-                looks: "Брюнет, борода и огромная бицуха на правой руке",
-                item: "Белая перчатка только на левой руке",
-                emoji: "🤍", photo: []
-            },
-            {
-                name: "Мартин Дмитриевич Мюрисеп",
-                looks: "2 татуировки с надписями на руках, по одной на каждую руку",
-                item: "Буду в кроссовках на которых много шнурков или в синей кепке с козырьком назад либо все сразу",
-                emoji: "👟", photo: []
-            }
+            { name: "Ростислав Имаев", looks: "Рост 184, длинные для парня волосы, ношу прямоугольные очки", item: "Буду в бордовой рубашке, на которой следы от ног и с цепью на кармане джинсов (левом)", emoji: "🕶️", photo: [] },
+            { name: "Катя", looks: "157см, проколы в ушных хрещах", item: "Браслет на правой руке с созвездием", emoji: "⭐", photo: [] },
+            { name: "Саша Флэш 😎", looks: "Заёбаная", item: "Привяжу к себе шарик", emoji: "🎈", photo: [] },
+            { name: "София", looks: "Рост ~160, татуха на левой руке (с моей стороны, для других правая), пирсинг губы, крашенные волосы, круглые очки, рядом всегда эмобойчик", item: "Выделяющаяся одежда, не спутаешь", emoji: "🖤", photo: [] },
+            { name: "Антон Мишин", looks: "шкаф, усы", item: "усы……, розовая кепка", emoji: "🐼", photo: ['photos/IMG_9695 - Anton Mišin.jpeg'] },
+            { name: "Диана Патракова-Матулявичене)))))", looks: "Полное телосложение, ношу очки, временно блондинка, татуировки на руках, ногах, шее и груди", item: "Петух на правой руке😂", emoji: "🐓", photo: ['photos/image - Diana Patrakova.jpg', 'photos/image - Diana Patrakova(1).jpg'] },
+            { name: "Юра🫡", looks: "Челка на глаз, как будто я эмо йоууу", item: "Собачьи уши и браслет с брюльками на левой руке", emoji: "🐾", photo: ['photos/image - Juri Zn.jpg', 'photos/IMG_9069 - Juri Zn.jpeg'] },
+            { name: "Вика", looks: "Рост 169, русые волосы, серо-зелёнве глаза. Есть тату на левой руке, стройная :3", item: "Кольцо с котиком на правой руке, кольцо золотое с камушком на левой.", emoji: "🐱", photo: [] },
+            { name: "Илья", looks: "Рост более 1.90, светлые волосы, светлые глаза", item: "Зеленая панамка", emoji: "🟢", photo: [] },
+            { name: "Андрей", looks: "Не полная метка Волан-де-мората на лбу, родимое пятно на половину левого бедра", item: "Часы с оранжевым ремешком на левой руке", emoji: "⚡", photo: ['photos/IMG_20260614_215751_407 - Andrei Suhodol.jpg'] },
+            { name: "Наира", looks: "Высокая, рыжая, наверное не буду носить очку в этот день, септум в носу и в ушах золотые сережки", item: "рыжая бошка, могу надеть зеленую кепку там, заплести мои signature 2 косички на затылке, септум в носу и в ушах золотые сережки", emoji: "🦊", photo: [] },
+            { name: "Лада", looks: "На носу осталась дырка после ветрянки\nТатуировка Нефертити на левой руке", item: "Oura ring", emoji: "💍", photo: [] },
+            { name: "Артур", looks: "Татуировка механических часов на правой руке, ношу очки", item: "Наплечная сумка, чёрно-золотистого цвета часы", emoji: "⌚", photo: [] },
+            { name: "Артём Шамшурс", looks: "«Субтильное» телосложение(небольшие руки и тд.), бэйби фэйс, шатен, ровная осанка, длинная шея. Часто ношу просторную одежду и рюкзак", item: "Чётки на шее(или в руках). Ну и рюкзак часто ношу", emoji: "📿", photo: [] },
+            { name: "Йоланта", looks: "Рост меньше 170см, карие глаза и длинные волосы", item: "Ожерелье из ракушек", emoji: "🐚", photo: [] },
+            { name: "Ева", looks: "Рост 157, тёмные кучерявые волосы, серые глаза, огромная бицуха (нет)", item: "Прикольная панамка", emoji: "👒", photo: [] },
+            { name: "Максим Тюленев", looks: "Рост ~178😞\nБрюнет?\nКороткая стрижка\nБорода\n72кг\nВсе ноги в ссадинах", item: "Я буду в розовой одежде (шорты и футболка)", emoji: "🌸", photo: [] },
+            { name: "Arvidas", looks: "Ношу очки, татуировка на правой кисти", item: "Рубашка с коротким рукавом с динозаврами.", emoji: "🦖", photo: [] },
+            { name: "Диана (Гришкова)", looks: "Светлые длинные волосы, голубые глаза, средний рост", item: "Косички и блестящие камушки в волосах.", emoji: "✨", photo: [] },
+            { name: "Ilya", looks: "Брюнет, борода и огромная бицуха на правой руке", item: "Белая перчатка только на левой руке", emoji: "🤍", photo: [] },
+            { name: "Мартин Дмитриевич Мюрисеп", looks: "2 татуировки с надписями на руках, по одной на каждую руку", item: "Буду в кроссовках на которых много шнурков или в синей кепке с козырьком назад либо все сразу", emoji: "👟", photo: [] }
         ];
 
-        // tilts: alternating left/right, different angles per card
         const tilts = [2, -3, 1.5, -2.5, 3, -1, 2.5, -3.5, 1, -2, 3.5, -1.5, 2, -3, 1.5, -2, 3, -1.5, 2.5, -3, 1];
 
+        // ── STATE ──
+        const likedCards = new Set(JSON.parse(localStorage.getItem('likedCards') || '[]'));
+        let globalLikes = {};
+        let globalComments = {};
+        let dataLoaded = false;
+
+        // ── API ──
+        async function api(params) {
+            const url = new URL(APPS_SCRIPT_URL);
+            Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+            const res = await fetch(url.toString());
+            return res.json();
+        }
+
+        async function loadAllData() {
+            try {
+                const data = await api({ action: 'getAllData' });
+                globalLikes = data.likes || {};
+                globalComments = data.comments || {};
+                dataLoaded = true;
+                document.querySelectorAll('.card').forEach(card => {
+                    const name = card.dataset.name;
+                    updateLikeUI(card, globalLikes[name] || 0);
+                    renderComments(card, globalComments[name] || []);
+                });
+            } catch (e) {
+                console.warn('Could not load data from Google Sheets:', e);
+            }
+        }
+
+        // ── BUILD CARDS ──
         const grid = document.getElementById('grid');
         const searchInput = document.getElementById('search');
         const countEl = document.getElementById('count');
@@ -581,35 +656,158 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.dataset.search = (p.name + ' ' + p.looks + ' ' + p.item).toLowerCase();
+                card.dataset.name = p.name;
                 card.style.transform = `rotate(${tilts[i] || 0}deg)`;
 
-                function driveToDirect(url) {
-                    const id = url.match(/\/d\/([^/]+)/)?.[1];
-                    return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1000` : url;
-                }
-
-                const photoHTML = p.photo
-                    .map(photo => `<img src="${photo}" alt="${p.name}" loading="lazy">`)
-                    .join("");
+                const photoHTML = p.photo.map(ph => `<img src="${ph}" alt="${p.name}" loading="lazy">`).join('');
+                const isLiked = likedCards.has(p.name);
 
                 card.innerHTML = `
-      <div class="card-top">
-        <div class="card-num">#${String(i + 1).padStart(2, '0')}</div>
-        <div class="card-name">${p.emoji} ${p.name}</div>
-      </div>
-      <div class="card-body">
-        ${photoHTML}
-        <div class="lbl">👤 КАК ВЫГЛЯДИТ:</div>
-        <div class="txt">${p.looks}</div>
-        <div class="badge">★ ОТЛИЧИТЕЛЬНОЕ ★</div>
-        <div class="txt">${p.item}</div>
-      </div>
-    `;
+            <div class="card-top">
+                <div class="card-num">#${String(i + 1).padStart(2, '0')}</div>
+                <div class="card-name">${p.emoji} ${p.name}</div>
+            </div>
+            <div class="card-body">
+                ${photoHTML}
+                <div class="lbl">👤 КАК ВЫГЛЯДИТ:</div>
+                <div class="txt">${p.looks}</div>
+                <div class="badge">★ ОТЛИЧИТЕЛЬНОЕ ★</div>
+                <div class="txt">${p.item}</div>
+            </div>
+            <div class="social-bar">
+                <div class="like-row">
+                    <button class="like-btn ${isLiked ? 'liked' : ''}" data-name="${p.name}">
+                        ${isLiked ? '♥ НРАВИТСЯ' : '♡ НРАВИТСЯ'}
+                    </button>
+                    <span class="like-count">···</span>
+                    <button class="comments-toggle" data-name="${p.name}">💬 КОМЕНТЫ</button>
+                </div>
+                <div class="comments-section" style="display:none">
+                    <div class="comment-list"></div>
+                    <div class="comment-form">
+                        <input type="text" class="author-input" placeholder="твоё имя (или аноним)" maxlength="50" />
+                        <textarea class="text-input" placeholder="написать комментарий..." rows="2" maxlength="500"></textarea>
+                        <button class="comment-submit">ОТПРАВИТЬ ▶</button>
+                        <div class="status-msg"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+
                 grid.appendChild(card);
+
+                // like button
+                card.querySelector('.like-btn').addEventListener('click', () => handleLike(card, p.name));
+
+                // comments toggle
+                card.querySelector('.comments-toggle').addEventListener('click', () => {
+                    const sec = card.querySelector('.comments-section');
+                    const open = sec.style.display === 'none';
+                    sec.style.display = open ? 'block' : 'none';
+                    card.querySelector('.comments-toggle').textContent = open ? '💬 СКРЫТЬ' : '💬 КОМЕНТЫ';
+                });
+
+                // submit comment
+                card.querySelector('.comment-submit').addEventListener('click', () => handleComment(card, p.name));
+
+                // submit on Ctrl+Enter in textarea
+                card.querySelector('.text-input').addEventListener('keydown', e => {
+                    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleComment(card, p.name);
+                });
             });
+
             updateCount();
+            loadAllData();
         }
 
+        // ── LIKES ──
+        function updateLikeUI(card, count) {
+            const btn = card.querySelector('.like-btn');
+            const countEl = card.querySelector('.like-count');
+            const name = card.dataset.name;
+            const liked = likedCards.has(name);
+            btn.className = 'like-btn' + (liked ? ' liked' : '');
+            btn.textContent = liked ? '♥ НРАВИТСЯ' : '♡ НРАВИТСЯ';
+            countEl.textContent = count > 0 ? count : '0';
+        }
+
+        async function handleLike(card, name) {
+            const btn = card.querySelector('.like-btn');
+            if (btn.disabled) return;
+
+            if (likedCards.has(name)) return; // prevent unliking to keep count honest
+
+            btn.disabled = true;
+            try {
+                const data = await api({ action: 'addLike', name });
+                globalLikes[name] = data.count;
+                likedCards.add(name);
+                localStorage.setItem('likedCards', JSON.stringify([...likedCards]));
+                updateLikeUI(card, data.count);
+            } catch (e) {
+                showStatus(card, 'ошибка :( попробуй ещё', 'err');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // ── COMMENTS ──
+        function renderComments(card, comments) {
+            const list = card.querySelector('.comment-list');
+            if (!comments || comments.length === 0) {
+                list.innerHTML = '<div class="comment-empty">пока тишина... 👻</div>';
+                return;
+            }
+            list.innerHTML = comments.map(c => {
+                const dt = c.timestamp ? new Date(c.timestamp) : null;
+                const timeStr = dt ? `${dt.getDate()}.${String(dt.getMonth() + 1).padStart(2, '0')} ${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}` : '';
+                return `
+            <div class="comment-item">
+                <div class="comment-author">${escHtml(c.author || 'Аноним')} <span class="comment-time">${timeStr}</span></div>
+                <div class="comment-text">${escHtml(c.text)}</div>
+            </div>
+        `;
+            }).join('');
+            list.scrollTop = list.scrollHeight;
+        }
+
+        async function handleComment(card, name) {
+            const authorInput = card.querySelector('.author-input');
+            const textInput = card.querySelector('.text-input');
+            const btn = card.querySelector('.comment-submit');
+            const text = textInput.value.trim();
+            if (!text) { showStatus(card, 'напиши что-нибудь!', 'err'); return; }
+
+            btn.disabled = true;
+            showStatus(card, 'отправляю...', 'ok');
+            try {
+                const author = authorInput.value.trim() || 'Аноним';
+                const data = await api({ action: 'addComment', name, author, text });
+                if (data.error) throw new Error(data.error);
+                if (!globalComments[name]) globalComments[name] = [];
+                globalComments[name].push({ author: data.author, text: data.text, timestamp: data.timestamp });
+                renderComments(card, globalComments[name]);
+                textInput.value = '';
+                showStatus(card, 'отправлено! ✓', 'ok');
+                setTimeout(() => showStatus(card, '', ''), 2000);
+            } catch (e) {
+                showStatus(card, 'ошибка :( попробуй ещё', 'err');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function showStatus(card, msg, type) {
+            const el = card.querySelector('.status-msg');
+            el.textContent = msg;
+            el.className = 'status-msg' + (type ? ' ' + type : '');
+        }
+
+        function escHtml(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ── SEARCH ──
         function updateCount() {
             const vis = grid.querySelectorAll('.card:not(.hidden)').length;
             countEl.textContent = `показано: ${vis} из ${people.length}`;
