@@ -1,3 +1,53 @@
+const API_URL = "https://script.google.com/macros/s/AKfycby7vD3vJzVU0MwjemAAxhgitY2PtYjqZl6b-06RE_cKQdCmCv_kds3D5yPR4GDQwUmepg/exec";
+const PLAYER_KEY = "task-tracker-player";
+const REQUIRED_API_VERSION = "one-sheet-v3";
+
+const state = {
+    players: [],
+    player: localStorage.getItem(PLAYER_KEY) || "",
+    tasks: [],
+    saving: new Set(),
+};
+
+const playerChips = document.querySelector("#playerChips");
+const tasksNode = document.querySelector("#tasks");
+const statusNode = document.querySelector("#status");
+const completedCountNode = document.querySelector("#completedCount");
+const taskTemplate = document.querySelector("#taskTemplate");
+
+init();
+
+async function init() {
+    if (!isConfigured()) {
+        showError("Вставьте URL веб-приложения Google Apps Script в site/app.js.");
+        playerChips.innerHTML = '<button class="player-chip" type="button" disabled>Нет API URL</button>';
+        return;
+    }
+
+    try {
+        setStatus("Загружаем игроков...");
+        const data = await apiRequest({ action: "players" });
+        ensureCurrentApi(data);
+        state.players = normalizePlayers(data.players || []);
+
+        renderPlayers();
+
+        if (state.players.length === 0) {
+            setStatus("В таблице пока нет игроков.");
+            return;
+        }
+
+        if (!state.players.includes(state.player)) {
+            state.player = state.players[0];
+        }
+
+        renderPlayers();
+        await loadPlayer(state.player);
+    } catch (error) {
+        showError(error.message);
+    }
+}
+
 function renderPlayers() {
     playerChips.innerHTML = "";
 
@@ -29,6 +79,14 @@ function isSheetName(value) {
     return /^sheet\d*$/i.test(String(value).trim()) || /^лист\d*$/i.test(String(value).trim());
 }
 
+function ensureCurrentApi(data) {
+    if (data.version !== REQUIRED_API_VERSION) {
+        throw new Error(
+            "Apps Script отдает старую версию. Сделайте Deploy -> Manage deployments -> Edit -> Version: New version -> Deploy.",
+        );
+    }
+}
+
 async function selectPlayer(player) {
     if (state.player === player) return;
 
@@ -43,6 +101,7 @@ async function loadPlayer(player) {
         setStatus(`Загружаем задания для ${player}...`);
         tasksNode.innerHTML = "";
         const data = await apiRequest({ action: "state", player });
+        ensureCurrentApi(data);
         state.tasks = data.tasks || [];
         localStorage.setItem(PLAYER_KEY, player);
         renderTasks();
@@ -63,21 +122,21 @@ function renderTasks() {
 
         row.dataset.taskId = task.id;
         row.classList.toggle("is-done", Boolean(task.done));
-        checkbox.checked = Boolean(task.done);
-        checkbox.disabled = state.saving.has(task.id);
-        number.textContent = `#${task.number || task.id}`;
-        text.textContent = task.text;
+    checkbox.checked = Boolean(task.done);
+    checkbox.disabled = state.saving.has(task.id);
+    number.textContent = `#${task.number || task.id}`;
+    text.textContent = task.text;
 
-        checkbox.addEventListener("change", () => toggleTask(task.id, checkbox.checked));
-        row.addEventListener("click", (event) => {
-            if (event.target === checkbox || event.target.closest(".task-check")) return;
-            if (checkbox.disabled) return;
+    checkbox.addEventListener("change", () => toggleTask(task.id, checkbox.checked));
+    row.addEventListener("click", (event) => {
+      if (event.target === checkbox || event.target.closest(".task-check")) return;
+      if (checkbox.disabled) return;
 
-            checkbox.checked = !checkbox.checked;
-            toggleTask(task.id, checkbox.checked);
-        });
-        tasksNode.append(row);
-    }
+      checkbox.checked = !checkbox.checked;
+      toggleTask(task.id, checkbox.checked);
+    });
+    tasksNode.append(row);
+  }
 
     updateCounter();
 }
