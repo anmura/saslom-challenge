@@ -87,7 +87,6 @@ async function loadPlayer(player) {
         setStatus(`Загружаем задания для ${player}...`);
         tasksNode.innerHTML = "";
         const data = await apiRequest({ action: "state", player });
-        ensureCurrentApi(data);
         state.tasks = data.tasks || [];
         localStorage.setItem(PLAYER_KEY, player);
         renderTasks();
