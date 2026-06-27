@@ -18,16 +18,10 @@ const taskTemplate = document.querySelector("#taskTemplate");
 init();
 
 async function init() {
-    if (!isConfigured()) {
-        showError("Вставьте URL веб-приложения Google Apps Script в site/app.js.");
-        playerChips.innerHTML = '<button class="player-chip" type="button" disabled>Нет API URL</button>';
-        return;
-    }
 
     try {
         setStatus("Загружаем игроков...");
         const data = await apiRequest({ action: "players" });
-        ensureCurrentApi(data);
         state.players = normalizePlayers(data.players || []);
 
         renderPlayers();
@@ -79,14 +73,6 @@ function isSheetName(value) {
     return /^sheet\d*$/i.test(String(value).trim()) || /^лист\d*$/i.test(String(value).trim());
 }
 
-function ensureCurrentApi(data) {
-    if (data.version !== REQUIRED_API_VERSION) {
-        throw new Error(
-            "Apps Script отдает старую версию. Сделайте Deploy -> Manage deployments -> Edit -> Version: New version -> Deploy.",
-        );
-    }
-}
-
 async function selectPlayer(player) {
     if (state.player === player) return;
 
@@ -122,21 +108,21 @@ function renderTasks() {
 
         row.dataset.taskId = task.id;
         row.classList.toggle("is-done", Boolean(task.done));
-    checkbox.checked = Boolean(task.done);
-    checkbox.disabled = state.saving.has(task.id);
-    number.textContent = `#${task.number || task.id}`;
-    text.textContent = task.text;
+        checkbox.checked = Boolean(task.done);
+        checkbox.disabled = state.saving.has(task.id);
+        number.textContent = `#${task.number || task.id}`;
+        text.textContent = task.text;
 
-    checkbox.addEventListener("change", () => toggleTask(task.id, checkbox.checked));
-    row.addEventListener("click", (event) => {
-      if (event.target === checkbox || event.target.closest(".task-check")) return;
-      if (checkbox.disabled) return;
+        checkbox.addEventListener("change", () => toggleTask(task.id, checkbox.checked));
+        row.addEventListener("click", (event) => {
+            if (event.target === checkbox || event.target.closest(".task-check")) return;
+            if (checkbox.disabled) return;
 
-      checkbox.checked = !checkbox.checked;
-      toggleTask(task.id, checkbox.checked);
-    });
-    tasksNode.append(row);
-  }
+            checkbox.checked = !checkbox.checked;
+            toggleTask(task.id, checkbox.checked);
+        });
+        tasksNode.append(row);
+    }
 
     updateCounter();
 }
@@ -222,8 +208,4 @@ function setStatus(message) {
 function showError(message) {
     statusNode.textContent = message;
     statusNode.classList.add("error");
-}
-
-function isConfigured() {
-    return API_URL.startsWith("https://script.google.com/");
 }

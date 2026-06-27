@@ -1,55 +1,124 @@
 <!doctype html>
 <html lang="ru">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Задания игроков</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Press+Start+2P&family=VT323&display=swap"
-      rel="stylesheet"
-    />
+        href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Press+Start+2P&family=VT323&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="ticker">ВЫБЕРИ ИГРОКА • ВЫПОЛНЯЙ ЗАДАНИЯ • СОХРАНЯЕТСЯ АВТОМАТИЧЕСКИ</div>
     <main class="app-shell">
-      <section class="topbar" aria-label="Панель игрока">
-        <div>
-          <p class="eyebrow">Игровой лист</p>
-          <h1>Задания</h1>
-        </div>
+        <section class="topbar" aria-label="Панель игрока">
+            <div>
+                <p class="eyebrow">Игровой лист</p>
+                <h1>Задания</h1>
+            </div>
 
-        <div class="score" aria-live="polite">
-          <span id="completedCount">0</span>
-          <small>выполнено</small>
-        </div>
-      </section>
+            <div class="score" aria-live="polite">
+                <span id="completedCount">0</span>
+                <small>выполнено</small>
+            </div>
+        </section>
 
-      <section class="player-panel" aria-label="Выбор игрока">
-        <div class="panel-label">>> ИГРОК:</div>
-        <div class="player-chips" id="playerChips" role="listbox" aria-label="Игроки">
-          <button class="player-chip" type="button" disabled>Загрузка...</button>
-        </div>
-      </section>
+        <section class="player-panel" aria-label="Выбор игрока">
+            <div class="panel-label">>> ИГРОК:</div>
+            <div class="player-chips" id="playerChips" role="listbox" aria-label="Игроки">
+                <button class="player-chip" type="button" disabled>Загрузка...</button>
+            </div>
+        </section>
 
-      <section class="status" id="status" role="status">Подключаемся к хранилищу...</section>
+        <section class="status" id="status" role="status">Подключаемся к хранилищу...</section>
 
-      <section class="tasks" id="tasks" aria-label="Список заданий"></section>
+        <section class="tasks" id="tasks" aria-label="Список заданий"></section>
     </main>
 
     <template id="taskTemplate">
-      <article class="task">
-        <label class="task-check">
-          <input type="checkbox" />
-          <span class="box" aria-hidden="true"></span>
-        </label>
-        <div class="task-body">
-          <span class="task-number"></span>
-          <p class="task-text"></p>
-        </div>
-      </article>
+        <article class="task">
+            <label class="task-check">
+                <input type="checkbox" />
+                <span class="box" aria-hidden="true"></span>
+            </label>
+            <div class="task-body">
+                <span class="task-number"></span>
+                <p class="task-text"></p>
+            </div>
+        </article>
     </template>
 
     <script src="./app.js"></script>
-  </body>
+    <!-- ============================================================
+     ВСТАВИТЬ ПЕРЕД ЗАКРЫВАЮЩИМ ТЕГОМ </body>
+     в файле: C:\Users\amzel\Desktop\saslom-challenge\saslom-challenge\index.html
+     ============================================================ -->
+
+    <style>
+        .site-switch-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+
+            /* Ретро-стиль под тематику сайта */
+            background: #111;
+            color: #ffe600;
+            border: 2px solid #ffe600;
+            border-radius: 4px;
+            padding: 10px 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            cursor: pointer;
+
+            box-shadow: 3px 3px 0 #ffe600;
+            transition: transform 0.1s, box-shadow 0.1s;
+
+            max-width: calc(100vw - 40px);
+            white-space: nowrap;
+        }
+
+        .site-switch-btn:hover,
+        .site-switch-btn:focus {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 #ffe600;
+            outline: none;
+        }
+
+        .site-switch-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 #ffe600;
+        }
+
+        @media (max-width: 400px) {
+            .site-switch-btn {
+                bottom: 12px;
+                right: 50%;
+                transform: translateX(50%);
+                font-size: 12px;
+                padding: 9px 14px;
+            }
+
+            .site-switch-btn:hover {
+                transform: translateX(50%) translate(-2px, -2px);
+            }
+
+            .site-switch-btn:active {
+                transform: translateX(50%) translate(1px, 1px);
+            }
+        }
+    </style>
+
+    <a class="site-switch-btn" href="https://anmura.github.io/saslom/" title="Вернуться на главную">
+        ← игроки
+    </a>
+</body>
+
 </html>
